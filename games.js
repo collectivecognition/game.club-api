@@ -1,6 +1,6 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
-require('unirest');
+var unirest = require('unirest');
 
 var express = require('express');
 
