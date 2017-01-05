@@ -13,7 +13,7 @@ var router = express.Router();
 // GET /games?q=:term
 
 router.get('/', function(req, res) {
-  unirest.get(`https://igdbcom-internet-game-database-v1.p.mashape.com/games?${req.query.q}`)
+  unirest.get(`https://igdbcom-internet-game-database-v1.p.mashape.com/games?search=${req.query.q}`)
     .header('X-Mashape-Key', process.env.MASHAPE_KEY)
     .header('Accept', 'application/json')
     .end(function(result) {
