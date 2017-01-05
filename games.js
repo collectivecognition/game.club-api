@@ -13,9 +13,9 @@ var router = express.Router();
 // GET /games?q=:term
 
 router.get('/', function(req, res) {
-  unirest.get("https://igdbcom-internet-game-database-v1.p.mashape.com/characters/?fields=*&limit=10")
-    .header("X-Mashape-Key", process.env.MASHAPE_KEY)
-    .header("Accept", "application/json")
+  unirest.get(`https://igdbcom-internet-game-database-v1.p.mashape.com/games?${req.query.q}`)
+    .header('X-Mashape-Key', process.env.MASHAPE_KEY)
+    .header('Accept', 'application/json')
     .end(function(result) {
       if(result.status >= 400){
         console.log(process.env.MASHAPE_KEY, result.body);
