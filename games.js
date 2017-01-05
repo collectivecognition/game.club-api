@@ -11,10 +11,10 @@ var router = express.Router();
 
 router.get('/', function(req, res) {
 unirest.get(`https://igdbcom-internet-game-database-v1.p.mashape.com/games/?fields=name&limit=10&offset=0&order=release_dates.date%3Adesc&search=${req.query.q}`)
-.header("X-Mashape-Key", process.env.MASHAPE_KEY)
-.header("Accept", "application/json")
+.header('X-Mashape-Key', process.env.MASHAPE_KEY)
+.header('Accept', 'application/json')
 .end(function (result) {
-  console.log(result.status, result.headers, result.body);
+  res.status(result.status).json(result.body);
 });
 });
 
