@@ -20,7 +20,7 @@ router.get('/', function(req, res) {
   })
   .then(function(response) {
     if(response.status >= 400){
-      return res.status(404).json({}); // FIXME
+      return res.status(404).json({message:response}); // FIXME
 
       console.log(response);
     }
