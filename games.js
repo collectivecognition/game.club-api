@@ -18,11 +18,12 @@ router.get('/', function(req, res) {
     .header("Accept", "application/json")
     .end(function(result) {
       if(result.status >= 400){
-        console.log(process.env.MASHAPE_KEY, result);
+        console.log(process.env.MASHAPE_KEY, result.body);
         return res.status(404).json({message:'Error'}); // FIXME
       }
 
       res.json(result.body);
+    });
 });
 
 module.exports = router;
