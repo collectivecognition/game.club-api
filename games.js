@@ -15,7 +15,8 @@ router.get('/', function(req, res) {
   fetch(`https://igdbcom-internet-game-database-v1.p.mashape.com/games?search=${req.query.q}`, {
     method: 'get',
     headers: {
-      'X-Mashape-Key': process.env.MASHAPE_KEY
+      'X-Mashape-Key': process.env.MASHAPE_KEY.
+      'Accept': 'application/json'
     }  
   })
   .then(function(response) {
