@@ -20,6 +20,7 @@ router.get('/', function(req, res) {
   })
   .then(function(response) {
     if(response.status >= 400){
+      console.log(process.env.MASHAPE_KEY, response);
       return res.status(404).json({message:'Error'}); // FIXME
 
       res.json(response);
