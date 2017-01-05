@@ -12,14 +12,19 @@ var router = express.Router();
 // GET /games?q=:term
 
 router.get('/', function(req, res) {
-  fetch(`http://thegamesdb.net/api/GetGamesList.php?name=${req.query.q}`)
-    .then(function(response) {
-      if(response.status >= 400){
-        return res.status(404).json({}); // FIXME
+  fetch(`https://igdbcom-internet-game-database-v1.p.mashape.com/games?search=${req.query.q}`, {
+    method: 'get',
+    headers: {
+      'X-Mashape-Key': process.env.MASHAPE_KEY
+    }  
+  })
+  .then(function(response) {
+    if(response.status >= 400){
+      return res.status(404).json({}); // FIXME
 
-        console.log(response);
-      }
-    });
+      console.log(response);
+    }
+  });
 });
 
 module.exports = router;
