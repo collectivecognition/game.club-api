@@ -1,5 +1,6 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
+require('unirest');
 
 var express = require('express');
 
@@ -12,21 +13,17 @@ var router = express.Router();
 // GET /games?q=:term
 
 router.get('/', function(req, res) {
-  fetch(`https://igdbcom-internet-game-database-v1.p.mashape.com/games?search=${req.query.q}`, {
-    method: 'get',
-    headers: {
-      'X-Mashape-Key': process.env.MASHAPE_KEY,
-      'Accept': 'application/json'
-    }  
-  })
-  .then(function(response) {
-    if(response.status >= 400){
-      console.log(process.env.MASHAPE_KEY, response);
-      return res.status(404).json({message:'Error'}); // FIXME
+  unirest.get("https://igdbcom-internet-game-database-v1.p.mashape.com/characters/?fields=*&limit=10")
+    .header("X-Mashape-Key", process.env.MASHAPE_KEY)
+    .header("Accept", "application/json")
+    .end(function (result) {
+      if(result.status >= 400){
+        console.log(process.env.MASHAPE_KEY, result);
+        return res.status(404).json({message:'Error'}); // FIXME
+      }
 
-      res.json(response);
-    }
-  });
+      res.json(result.body);
+    });
 });
 
 module.exports = router;
