@@ -45,6 +45,12 @@ router.get('/:id', (req, res) => {
         .header('X-Mashape-Key', process.env.MASHAPE_KEY)
         .header('Accept', 'application/json')
         .end(result => {
+
+          // Game not found in igdb either, throw an error
+
+          if(result.error){
+            return res.status(404).json({message: 'Game not found.', error: err.message})
+          }
           
           // Game found in igdb, insert it into db and return it
 
@@ -61,12 +67,6 @@ router.get('/:id', (req, res) => {
 
               res.json(game);
             });
-        })
-        .catch(err => {
-
-          // Game not found in igdb either, throw an error
-
-          res.status(404).json({message: 'Game not found.', error: err.message})
         })
     }
 
