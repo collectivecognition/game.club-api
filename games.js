@@ -33,8 +33,6 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   Game.findOne({igdbId: req.params.id}, (err, game) => {
-    console.log('err', err)
-    console.log('game', game)
 
     if(err){
       return res.status(500).json({message: 'Problem finding game.', error: err.message})
