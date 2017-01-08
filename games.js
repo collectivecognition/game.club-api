@@ -35,9 +35,14 @@ router.get('/:id', (req, res) => {
   Game.findOne({igdbId: req.params.id}, (err, game) => {
     console.log('err', err)
     console.log('game', game)
-    // Game not found in db, retrieve it from igdb
 
     if(err){
+      return res.status(500).json({message: 'Problem finding game.', error: err.message})
+    }
+
+    // Game not found in db, retrieve it from igdb
+
+    if(game == null){
       return unirest.get(`https://igdbcom-internet-game-database-v1.p.mashape.com/games/${req.params.id}?fields=name,screenshots`)
         .header('X-Mashape-Key', process.env.MASHAPE_KEY)
         .header('Accept', 'application/json')
