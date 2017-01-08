@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
 // GET /games/:id
 
 router.get('/:id', (req, res) => {
-  Game.findOne({igdbId: req.params.id}, (err, game) =>
+  Game.findOne({igdbId: req.params.id}, (err, game) => {
     console.log('err', err)
     console.log('game', game)
     // Game not found in db, retrieve it from igdb
