@@ -44,30 +44,31 @@ router.get('/:id', (req, res) => {
       return unirest.get(`https://igdbcom-internet-game-database-v1.p.mashape.com/games/${req.params.id}?fields=name,screenshots`)
         .header('X-Mashape-Key', process.env.MASHAPE_KEY)
         .header('Accept', 'application/json')
-        .type('json')
         .end(result => {
 
           // Game not found in igdb either, throw an error
 
           if(result.error){
-            return res.status(404).json({message: 'Game not found.', error: JSON.stringify(result)})
+            return res.status(404).json({message: 'Game not found.'})
           }
           
           // Game found in igdb, insert it into db and return it
 
-            const game = new Game({
-              name: result.body.name,
-              igdbId: result.body.id,
-              imageUrl: 'TODO'
-            })
+          const parsed = JSON.parse(result.body)[0];
 
-            game.save((err, game) => {
-              if(err){
-                return res.status(500).json({message: 'Problem inserting game in database.', error: err.message})
-              }
+          const game = new Game({
+            name: parsed.name,
+            igdbId: parsed.id,
+            imageUrl: 'TODO'
+          })
 
-              res.json(game);
-            });
+          game.save((err, game) => {
+            if(err){
+              return res.status(500).json({message: 'Problem inserting game in database.', error: err.message})
+            }
+
+            res.json(game);
+          });
         })
     }
 
