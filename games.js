@@ -50,7 +50,7 @@ router.get('/:id', (req, res) => {
           // Game not found in igdb either, throw an error
 
           if(result.error){
-            return res.status(404).json({message: 'Game not found.', error: err.message})
+            return res.status(404).json({message: 'Game not found.', error: result.body})
           }
           
           // Game found in igdb, insert it into db and return it
