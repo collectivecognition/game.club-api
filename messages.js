@@ -14,7 +14,7 @@ const MessageSchema = mongoose.Schema({
     ref: 'Game'
   },
   timestamp: mongoose.Schema.Types.Date,
-  text: mongoose.Schema.Types.Text
+  text: mongoose.Schema.Types.String
 })
 MessageSchema.plugin(mongoosePaginate)
 const Message = mongoose.model('Message', MessageSchema)
