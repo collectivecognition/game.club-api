@@ -44,6 +44,7 @@ router.get('/:id', (req, res) => {
       return unirest.get(`https://igdbcom-internet-game-database-v1.p.mashape.com/games/${req.params.id}?fields=name,screenshots`)
         .header('X-Mashape-Key', process.env.MASHAPE_KEY)
         .header('Accept', 'application/json')
+        .type('json')
         .end(result => {
 
           // Game not found in igdb either, throw an error
@@ -55,8 +56,8 @@ router.get('/:id', (req, res) => {
           // Game found in igdb, insert it into db and return it
 
             const game = new Game({
-              name: result.name,
-              igdbId: result.id,
+              name: result.body.name,
+              igdbId: result.body.id,
               imageUrl: 'TODO'
             })
 
