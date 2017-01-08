@@ -54,11 +54,9 @@ router.get('/:id', (req, res) => {
           
           // Game found in igdb, insert it into db and return it
 
-          const parsed = JSON.parse(result.body)[0];
-
           const game = new Game({
-            name: parsed.name,
-            igdbId: parsed.id,
+            name: result.body[0].name,
+            igdbId: result.body[0].id,
             imageUrl: 'TODO'
           })
 
