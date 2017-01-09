@@ -19,11 +19,11 @@ const router = express.Router()
 // GET /games?q=:term
 
 router.get('/', (req, res) => {
-  unirest.get(`http://www.giantbomb.com/api/search?format=json&field_list=name&limit=10&api_key=${process.env.GIANT_BOMB_API_KEY}&query=${req.query.q}`)
+  unirest.get(`http://www.giantbomb.com/api/search?format=json&field_list=name,id&limit=10&resource_type=game&api_key=${process.env.GIANT_BOMB_API_KEY}&query=${req.query.q}`)
   .header('User-Agent', 'Game.club API')
   .header('Accept', 'application/json')
   .end(result => {
-    res.status(result.status).json(result.body)
+    res.status(result.status).json(result.body.results)
   })
 })
 

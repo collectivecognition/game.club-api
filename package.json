@@ -22,14 +22,11 @@
     "express-paginate": "^0.2.2",
     "express-sanitizer": "^1.0.1",
     "express-validator": "^3.1.0",
-    "http": "0.0.0",
     "moment": "^2.17.1",
     "mongo-sanitize": "^1.0.0",
     "mongodb": "^2.2.19",
     "mongoose": "^4.7.6",
     "mongoose-paginate": "^5.0.3",
-    "pubnub": "^4.3.3",
-    "request": "^2.79.0",
     "unirest": "^0.5.1"
   }
 }
