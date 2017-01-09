@@ -3,6 +3,8 @@ const express = require('express')
 const ObjectId = require('mongodb').ObjectID
 const mongoose = require('mongoose').set('debug', true)
 
+const constants = require('./constants')
+
 const GameSchema = mongoose.Schema({
   name: String,
   imageUrl: String,
@@ -19,8 +21,8 @@ const router = express.Router()
 // GET /games?q=:term
 
 router.get('/', (req, res) => {
-  unirest.get(`http://www.giantbomb.com/api/search?format=json&field_list=name,id&limit=10&resources=game&api_key=${process.env.GIANT_BOMB_API_KEY}&query=${req.query.q}`)
-  .header('User-Agent', 'Game.club API')
+  unirest.get(`${constants.API_PATH}/search?format=json&field_list=name,id&limit=10&resources=game&api_key=${process.env.GIANT_BOMB_API_KEY}&query=${req.query.q}`)
+  .header('User-Agent', constants.API_USER_AGENT)
   .header('Accept', 'application/json')
   .end(result => {
     res.status(result.status).json(result.body.results)
@@ -32,7 +34,7 @@ router.get('/', (req, res) => {
 // GET /games/:id
 
 router.get('/:id', (req, res) => {
-  Game.findOne({igdbId: req.params.id}, (err, game) => {
+  Game.findOne({giantBombId: req.params.id}, (err, game) => {
 
     if(err){
       return res.status(500).json({message: 'Problem finding game.', error: err.message})
