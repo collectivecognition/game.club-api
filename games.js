@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
 
     if(game == null){
       return unirest.get(`${constants.API_PATH}/game/${req.params.id}?format=json&field_list=name,id,image&resources=game&api_key=${process.env.GIANT_BOMB_API_KEY}&query=${req.query.q}`)
-        .header('X-Mashape-Key', process.env.MASHAPE_KEY)
+        .header('User-Agent', constants.API_USER_AGENT)
         .header('Accept', 'application/json')
         .end(result => {
 
