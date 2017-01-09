@@ -43,7 +43,7 @@ router.get('/:id', (req, res) => {
     // Game not found in db, retrieve it from igdb
 
     if(game == null){
-      return unirest.get(`${constants.API_PATH}/games/${req.params.id}?fields=name,screenshots`)
+      return unirest.get(`${constants.API_PATH}/game/${req.params.id}?format=json&field_list=name,id,image&resources=game&api_key=${process.env.GIANT_BOMB_API_KEY}&query=${req.query.q}`)
         .header('X-Mashape-Key', process.env.MASHAPE_KEY)
         .header('Accept', 'application/json')
         .end(result => {
@@ -57,9 +57,9 @@ router.get('/:id', (req, res) => {
           // Game found in igdb, insert it into db and return it
 
           const game = new Game({
-            name: result.body[0].name,
-            igdbId: result.body[0].id,
-            imageUrl: 'TODO'
+            name: result.body.name,
+            giantBombId: result.body.id,
+            images: req.body.image
           })
 
           game.save((err, game) => {
