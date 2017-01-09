@@ -21,7 +21,7 @@ const router = express.Router()
 // GET /games?q=:term
 
 router.get('/', (req, res) => {
-  unirest.get(`${constants.API_PATH}/search?format=json&field_list=name,id&limit=10&resources=game&api_key=${process.env.GIANT_BOMB_API_KEY}&query=${req.query.q}`)
+  unirest.get(`${constants.API_PATH}/search?format=json&field_list=name,id,image&limit=10&resources=game&api_key=${process.env.GIANT_BOMB_API_KEY}&query=${req.query.q}`)
   .header('User-Agent', constants.API_USER_AGENT)
   .header('Accept', 'application/json')
   .end(result => {
@@ -43,7 +43,7 @@ router.get('/:id', (req, res) => {
     // Game not found in db, retrieve it from igdb
 
     if(game == null){
-      return unirest.get(`https://igdbcom-internet-game-database-v1.p.mashape.com/games/${req.params.id}?fields=name,screenshots`)
+      return unirest.get(`${constants.API_PATH}/games/${req.params.id}?fields=name,screenshots`)
         .header('X-Mashape-Key', process.env.MASHAPE_KEY)
         .header('Accept', 'application/json')
         .end(result => {
