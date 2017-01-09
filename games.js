@@ -19,7 +19,7 @@ const router = express.Router()
 // GET /games?q=:term
 
 router.get('/', (req, res) => {
-  unirest.get(`hhttp://www.giantbomb.com/api/search?format=json&field_list=name&limit=10&api_key=${process.env.GIANT_BOMB_API_KEY}&query=${req.query.q}`)
+  unirest.get(`http://www.giantbomb.com/api/search?format=json&field_list=name&limit=10&api_key=${process.env.GIANT_BOMB_API_KEY}&query=${req.query.q}`)
   .header('X-Mashape-Key', process.env.MASHAPE_KEY)
   .header('Accept', 'application/json')
   .end(result => {
