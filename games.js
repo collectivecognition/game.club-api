@@ -51,6 +51,7 @@ router.get('/:id', (req, res) => {
           // Game not found in igdb either, throw an error
 
           if(result.error !== 'OK'){
+            console.log('result', result.body);
             return res.status(404).json({message: 'Game not found.'})
           }
           
