@@ -19,7 +19,7 @@ const router = express.Router()
 // GET /games?q=:term
 
 router.get('/', (req, res) => {
-  unirest.get(`https://igdbcom-internet-game-database-v1.p.mashape.com/games/?fields=name,screenshots&limit=10&offset=0&order=release_dates.date%3Adesc&search=${req.query.q}`)
+  unirest.get(`hhttp://www.giantbomb.com/api/search?format=json&field_list=name&limit=10&api_key=${process.env.GIANT_BOMB_API_KEY}&query=${req.query.q}`)
   .header('X-Mashape-Key', process.env.MASHAPE_KEY)
   .header('Accept', 'application/json')
   .end(result => {
